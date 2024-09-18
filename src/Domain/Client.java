@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Client {
-    public String name;
+    public String nom;
     public String adresse;
     public String telephone;
     public List<Project> ListProject = new ArrayList<>();
+
+
 
     public List<Project> getListProject() {
         return ListProject;
@@ -17,12 +19,11 @@ public class Client {
         ListProject = listProject;
     }
 
-    public Client(String name, String adresse, String telephone, List<Project> listProject, boolean estProfessionnel) {
-        this.name = name;
+    public Client(String nom, String adresse, String telephone,boolean estProfessionnel) {
+        this.nom = nom;
         this.adresse = adresse;
         this.telephone = telephone;
-        ListProject = listProject;
-        this.estProfessionnel = estProfessionnel;
+         this.estProfessionnel = estProfessionnel;
     }
 
     public Client() {
@@ -30,12 +31,12 @@ public class Client {
 
     public boolean estProfessionnel;
 
-    public String getName() {
-        return name;
+    public String getNom() {
+        return nom;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
     public String getAdresse() {
@@ -65,7 +66,7 @@ public class Client {
     @Override
     public String toString() {
         return "Client{" +
-                "name='" + name + '\'' +
+                "nom='" + nom + '\'' +
                 ", adresse='" + adresse + '\'' +
                 ", telephone='" + telephone + '\'' +
                 ", ListProject=" + ListProject +
