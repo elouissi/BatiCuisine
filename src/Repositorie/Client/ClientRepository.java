@@ -13,31 +13,33 @@ import java.util.Optional;
 
 public class ClientRepository implements ClientInterface {
     private Connection conn;
-    public void ClientRepositoy() {
-
-        conn = Connection_DB.getInstance().Connect_to_DB("GreenPulse","GreenPulse","");
+    public ClientRepository() {
+         this.conn = Connection_DB.getInstance().Connect_to_DB();
     }
+
 
 
     @Override
     public Client add(Client client) throws SQLException {
         try {
-            String query = "INSERT INTO clients (nom,adresse,telephone,estProfessionnel) Values (?,?,?,?)";
+            String query = "INSERT INTO clients (nom, adresse, telephone, estProfessionnel) VALUES (?, ?, ?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setString(1,client.getNom());
-            pstmt.setString(2,client.getAdresse());
-            pstmt.setString(3,client.getTelephone());
-            pstmt.setBoolean(4, client.estProfessionnel);
-            pstmt.executeUpdate();
-
-        }catch (SQLException e){
+            pstmt.setString(1, client.getNom());
+            pstmt.setString(2, client.getAdresse());
+            pstmt.setString(3, client.getTelephone());
+            pstmt.setBoolean(4, client.isEstProfessionnel());
+            int affectedRows = pstmt.executeUpdate();
+            if (affectedRows > 0){
+                ResultSet generatedKeys = pstmt.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    client.id = generatedKeys.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
             throw new RuntimeException(e);
-
         }
         return client;
-
-     }
-
+    }
     @Override
     public Client update(Client client, int id) {
         Client updatedClient = null;
@@ -117,6 +119,28 @@ public class ClientRepository implements ClientInterface {
         }
         return Optional.ofNullable(client);
      }
+    public Optional<Client> getByNom(String nom) {
+        Client client = null;
+        try {
+            String query = "SELECT * FROM clients WHERE nom = ?";
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, nom);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                 int id = rs.getInt("id");
+                String adresse = rs.getString("adresse");
+                String telephone = rs.getString("telephone");
+                boolean estProfessionnel = rs.getBoolean("estProfessionnel");
+
+                client = new Client(id, nom, adresse, telephone, estProfessionnel);
+            }
+        } catch (Exception e) {
+            System.out.println("Error getting client by name: " + e.getMessage());
+        }
+        return Optional.ofNullable(client);
+    }
+
 
     @Override
     public boolean checkIfExist(int id) {
@@ -132,5 +156,17 @@ public class ClientRepository implements ClientInterface {
         }
         return exists;
     }
+    public boolean isNomExist(String nom) throws SQLException {
+        String query = "SELECT COUNT(*) FROM clients WHERE nom = ?";
+        PreparedStatement pstmt = conn.prepareStatement(query);
+        pstmt.setString(1, nom);
+        ResultSet rs = pstmt.executeQuery();
+
+        if (rs.next()) {
+            return rs.getInt(1) > 0;
+        }
+        return false;
+    }
+
 
 }

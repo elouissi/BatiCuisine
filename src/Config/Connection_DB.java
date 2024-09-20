@@ -4,6 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class Connection_DB {
+    private static String dbname = "BatiCuisine";
+    private static String user = "GreenPulse";
+    private static String pass = "";
+
 
     private static Connection_DB instance;
     private static Connection conn;
@@ -15,11 +19,11 @@ public static Connection_DB getInstance(){
     return instance;
 }
     public Connection_DB() {}
-    public Connection Connect_to_DB(String dbname, String user, String pass) {
+    public Connection Connect_to_DB() {
         if (conn == null) {
             try {
                 Class.forName("org.postgresql.Driver");
-                conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + dbname, user, pass);
+                conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + this.dbname, this.user, this.pass);
 
                 if (conn != null) {
                     System.out.println("Connected successfully");

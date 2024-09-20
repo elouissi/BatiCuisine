@@ -4,20 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Client {
+
+    public int id;
     public String nom;
     public String adresse;
     public String telephone;
+    public boolean estProfessionnel;
     public List<Project> ListProject = new ArrayList<>();
-
-
-
-    public List<Project> getListProject() {
-        return ListProject;
-    }
-
-    public void setListProject(List<Project> listProject) {
-        ListProject = listProject;
-    }
 
     public Client(String nom, String adresse, String telephone,boolean estProfessionnel) {
         this.nom = nom;
@@ -26,10 +19,19 @@ public class Client {
          this.estProfessionnel = estProfessionnel;
     }
 
+
+
     public Client() {
     }
 
-    public boolean estProfessionnel;
+    public Client(int id, String nom, String adresse, String telephone, boolean estProfessionnel) {
+        this.id = id;
+        this.nom = nom;
+        this.adresse = adresse;
+        this.telephone = telephone;
+        this.estProfessionnel = estProfessionnel;
+    }
+
 
     public String getNom() {
         return nom;
@@ -58,6 +60,13 @@ public class Client {
     public boolean isEstProfessionnel() {
         return estProfessionnel;
     }
+    public List<Project> getListProject() {
+        return ListProject;
+    }
+
+    public void setListProject(List<Project> listProject) {
+        ListProject = listProject;
+    }
 
     public void setEstProfessionnel(boolean estProfessionnel) {
         this.estProfessionnel = estProfessionnel;
@@ -66,6 +75,7 @@ public class Client {
     @Override
     public String toString() {
         return "Client{" +
+                "id" + id + '\''+
                 "nom='" + nom + '\'' +
                 ", adresse='" + adresse + '\'' +
                 ", telephone='" + telephone + '\'' +

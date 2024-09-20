@@ -1,14 +1,18 @@
 package View;
 
+import Domain.Client;
 import Service.ClientService;
 
+import java.sql.SQLException;
+import java.sql.SQLOutput;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class ClientView {
 
     Scanner scanner = new Scanner(System.in);
     ClientService clientService = new ClientService();
-    public void SearchClient(){
+    public void SearchClient() throws SQLException {
         int choix = 0;
         System.out.println("--- Recherche de client ---\n");
         System.out.println("1. Chercher un client existant\n");
@@ -20,6 +24,10 @@ public class ClientView {
             case 1:
                 System.out.println("Entrez le nom du client :");
                 String searchName = scanner.nextLine();
+                Optional<Client> client =  clientService.getClient(searchName);
+                if (client.isPresent()){   System.out.println(client);}else System.out.println("le nom que vous chercher n'existe pas");
+
+
 
                 break;
             case 2:
@@ -32,14 +40,18 @@ public class ClientView {
                 String telephone = scanner.nextLine();
                 System.out.println("est ce que ce client est professionel  :  ");
                 String Professionnel = scanner.nextLine();
-                boolean estProfessionnel;
-                if (Professionnel == "oui") {
+                 boolean estProfessionnel;
+                if (Professionnel.equals("oui")) {
                     estProfessionnel = true;
                 } else {
                     estProfessionnel = false;
                 }
-                clientService.addClient(nom, adresse, telephone,estProfessionnel);
-
+                Client clientSave = clientService.saveClient(new Client(nom, adresse, telephone,estProfessionnel));
+                if (clientSave != null) {
+                    System.out.println("Client ajouté avec succès !");
+                } else {
+                    System.out.println("Erreur : Un client avec ce nom existe déjà.");
+                }
 
         }
 

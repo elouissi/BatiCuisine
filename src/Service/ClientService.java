@@ -3,7 +3,9 @@ package Service;
 import Domain.Client;
 import Repositorie.Client.ClientRepository;
 
+import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class ClientService {
@@ -12,9 +14,14 @@ public class ClientService {
     ClientRepository clientRepository = new ClientRepository();
 
 
-    public void addClient(String nom, String adresse, String telephone,boolean estProfessionnel) {
-
-        Client client = new Client(nom,adresse,telephone,estProfessionnel);
-        clientRepository.add(client);
+    public Client saveClient(Client client) throws SQLException {
+        if (!clientRepository.isNomExist(client.nom)){
+       return clientRepository.add(client);
+        }
+        return null;
     }
+    public Optional<Client> getClient(String nom) throws SQLException{
+            return clientRepository.getByNom(nom);
+    }
+
 }
