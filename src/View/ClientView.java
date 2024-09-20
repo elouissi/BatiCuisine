@@ -18,6 +18,8 @@ public class ClientView {
         System.out.println("1. Chercher un client existant\n");
         System.out.println("2. Ajouter un nouveau client\n");
         System.out.println("3. Modifier un client");
+        System.out.println("4. Supprimer un client");
+        System.out.println("5. Afficher les clients");
         choix = scanner.nextInt();
         scanner.nextLine();
 
@@ -80,6 +82,20 @@ public class ClientView {
                 }
 
                 break;
+            case 4:
+                System.out.println("Entrez le nom du client que vous voulez supprimer:");
+                String deletedName = scanner.nextLine();
+                Optional<Client> clientDl =  clientService.getClient(deletedName);
+                if (clientDl.isPresent()){
+                    clientService.deleteClient(deletedName);
+                    System.out.println("le client est bien supprimé");
+                }else {
+                    System.out.println("le client non trouvé");
+                }
+                break;
+            case 5:
+                System.out.println("voici la liste des clients");
+                clientService.getAll().forEach(System.out::println);
                 }
 
 

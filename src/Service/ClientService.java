@@ -5,6 +5,7 @@ import Repositorie.Client.ClientRepository;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -15,9 +16,7 @@ public class ClientService {
 
 
     public Client saveClient(Client client) throws SQLException {
-        if (!clientRepository.isNomExist(client.nom)){
-       return clientRepository.add(client);
-        }
+        if (!clientRepository.isNomExist(client.nom)){return clientRepository.add(client);}
         return null;
     }
     public Optional<Client> getClient(String nom) throws SQLException{
@@ -25,12 +24,15 @@ public class ClientService {
     }
     public Client updateClient(Client client , String name ) throws SQLException {
         Optional<Client> cl = getClient(client.nom);
-        if(cl.isPresent()){
-            return null;
-        }else {
-            return clientRepository.update(client , name);
-        }
+        if(cl.isPresent())return null;else return clientRepository.update(client , name);
     }
+    public void deleteClient(String nom){
+        clientRepository.delete(nom);
+    }
+    public List<Client> getAll(){
+        return clientRepository.getAll();
+    }
+
 
 
 }

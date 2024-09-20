@@ -68,24 +68,17 @@ public class ClientRepository implements ClientInterface {
     }
 
     @Override
-    public Client delete(int id) {
-        Client client = null;
-        try {
-            Optional<Client> optionalUser = getById(1);
-            if (optionalUser.isPresent()) {
-                client = optionalUser.get();
-                String deleteQuery = "DELETE FROM clients WHERE id = ?";
+    public void delete(String nom) {
+         try {
+                String deleteQuery = "DELETE FROM clients WHERE nom = ?";
                 PreparedStatement deletePstmt = conn.prepareStatement(deleteQuery);
-                deletePstmt.setInt(1, id);
+                deletePstmt.setString(1, nom);
                 deletePstmt.executeUpdate();
-            } else {
-                System.out.println("client non trouvé");
-            }
+
         } catch (Exception e) {
-            System.out.println("Error deleting user: " + e);
+            System.out.println("Error deleting client: " + e);
         }
-        return client;
-    }
+     }
 
     @Override
     public List<Client> getAll() {
@@ -95,12 +88,12 @@ public class ClientRepository implements ClientInterface {
             PreparedStatement pstmt = conn.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                clients.add(new Client(rs.getString("nom"), rs.getString("adresse"), rs.getString("telephone"), rs.getBoolean("estProfessionnel")));
+                clients.add(new Client(rs.getInt("id"),rs.getString("nom"), rs.getString("adresse"), rs.getString("telephone"), rs.getBoolean("estProfessionnel")));
             }
             return clients;
 
         } catch (Exception e) {
-            System.out.println("Error getting users: " + e);
+            System.out.println("Error getting clients: " + e);
         }
         return clients;    }
 
