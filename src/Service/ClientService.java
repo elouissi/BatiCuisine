@@ -23,5 +23,14 @@ public class ClientService {
     public Optional<Client> getClient(String nom) throws SQLException{
             return clientRepository.getByNom(nom);
     }
+    public Client updateClient(Client client , String name ) throws SQLException {
+        Optional<Client> cl = getClient(client.nom);
+        if(cl.isPresent()){
+            return null;
+        }else {
+            return clientRepository.update(client , name);
+        }
+    }
+
 
 }

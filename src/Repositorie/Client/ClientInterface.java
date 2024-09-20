@@ -11,7 +11,7 @@ public interface ClientInterface {
 
 
     public Client add(Client client) throws SQLException;
-    public Client update(Client client,int id);
+    public Client update(Client client,String nom);
     public Client delete(int id);
     public List<Client> getAll();
     public Optional<Client> getById(int id);

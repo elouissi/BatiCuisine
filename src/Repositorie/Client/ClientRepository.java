@@ -41,25 +41,26 @@ public class ClientRepository implements ClientInterface {
         return client;
     }
     @Override
-    public Client update(Client client, int id) {
+    public Client update(Client client, String nom) {
         Client updatedClient = null;
         try {
-            String updateQuery = "UPDATE clients SET nom = ?, adresse = ?, telephone= ?,estProfessionnel=? WHERE id = ?";
+            String updateQuery = "UPDATE clients SET nom = ?, adresse = ?, telephone= ?,estProfessionnel=? WHERE nom = ?";
             PreparedStatement updatePstmt = conn.prepareStatement(updateQuery);
             updatePstmt.setString(1, client.getNom());
             updatePstmt.setString(2, client.getAdresse());
             updatePstmt.setString(3, client.getTelephone());
             updatePstmt.setBoolean(4, client.estProfessionnel);
-            updatePstmt.setInt(5, id);
+            updatePstmt.setString(5, nom);
             updatePstmt.executeUpdate();
-            String selectQuery = "SELECT * FROM clients WHERE id = ?";
+            String selectQuery = "SELECT * FROM clients WHERE nom = ?";
             PreparedStatement selectPstmt = conn.prepareStatement(selectQuery);
-            selectPstmt.setInt(1, id);
+            selectPstmt.setString(1, nom);
             ResultSet rs = selectPstmt.executeQuery();
 
             if (rs.next()) {
                 updatedClient = new Client(rs.getString("nom"), rs.getString("adresse"), rs.getString("telephone"), rs.getBoolean("estProfessionnel"));
             }
+
         } catch (Exception e) {
             System.out.println("Error updating user: " + e);
         }
@@ -167,6 +168,7 @@ public class ClientRepository implements ClientInterface {
         }
         return false;
     }
+
 
 
 }

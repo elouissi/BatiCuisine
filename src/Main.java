@@ -8,8 +8,6 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
-        ///IMPORT CONNEXION
-
 
         ///IMPORT our VIEWS
         ClientView clientView = new ClientView();

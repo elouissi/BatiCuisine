@@ -17,6 +17,7 @@ public class ClientView {
         System.out.println("--- Recherche de client ---\n");
         System.out.println("1. Chercher un client existant\n");
         System.out.println("2. Ajouter un nouveau client\n");
+        System.out.println("3. Modifier un client");
         choix = scanner.nextInt();
         scanner.nextLine();
 
@@ -52,8 +53,36 @@ public class ClientView {
                 } else {
                     System.out.println("Erreur : Un client avec ce nom existe déjà.");
                 }
+                break;
+            case 3:
+                System.out.println("Entrez le nom du client que vous voulez modifier :");
+                String UpdatesName = scanner.nextLine();
+                Optional<Client> clientUp =  clientService.getClient(UpdatesName);
+                if (clientUp.isPresent()){
+                    System.out.println("enter le nouveau nom : ");
+                    String nomUpdate = scanner.nextLine();
+                    System.out.println("enter leur adresse :  ");
+                    String adresseUpdate = scanner.nextLine();
+                    System.out.println("enter leur Numéro de téléphone :   ");
+                    String telephoneUpdate = scanner.nextLine();
+                    System.out.println("est ce que ce client est professionel  :  ");
+                    String ProfessionnelUpdate = scanner.nextLine();
+                    boolean estProfessionnelUpdate = ProfessionnelUpdate.equals("oui");
+                    clientService.updateClient(new Client(nomUpdate, adresseUpdate, telephoneUpdate,estProfessionnelUpdate) , UpdatesName);
+                    Optional<Client> updatedClinet = clientService.getClient(nomUpdate);
+                    if (updatedClinet.isPresent()) {
+                        System.out.println("Client modifié avec succès !");
+                    } else {
+                        System.out.println("Erreur : Un client avec ce nom existe déjà.");
+                    }
+                }else {
+                    System.out.println("le nom que vous chercher n'existe pas");
+                }
 
-        }
+                break;
+                }
+
+
 
     }
 
