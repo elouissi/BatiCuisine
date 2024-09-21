@@ -5,11 +5,15 @@ public class Main_oeuvre extends Composant{
     public Double heuresTravail;
     public Double productiviteOuvrier;
 
-    public Main_oeuvre(String name, String typeComposant, String typeTVA, Double tauxHoraire, Double heuresTravail, Double productiviteOuvrier) {
-        super(name, typeComposant, typeTVA);
+    public Main_oeuvre(String name, String typeComposant, double tauxTVA, Double tauxHoraire, Double heuresTravail, Double productiviteOuvrier) {
+        super(name, typeComposant, tauxTVA);
         this.tauxHoraire = tauxHoraire;
         this.heuresTravail = heuresTravail;
         this.productiviteOuvrier = productiviteOuvrier;
+    }
+
+    public Main_oeuvre() {
+
     }
 
     @Override
@@ -20,7 +24,7 @@ public class Main_oeuvre extends Composant{
                 ", productiviteOuvrier=" + productiviteOuvrier +
                 ", name='" + name + '\'' +
                 ", typeComposant='" + typeComposant + '\'' +
-                ", typeTVA='" + typeTVA + '\'' +
+                ", tauxTVA='" + tauxTVA + '\'' +
                 '}';
     }
 
