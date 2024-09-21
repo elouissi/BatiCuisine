@@ -19,14 +19,18 @@ public class MateriauxRepository implements MateriauxInterface {
     }
 
     @Override
-    public Materiaux add(Materiaux materiaux)  {
+    public Materiaux add(Materiaux materiaux,int id)  {
         try {
-            String query = "INSERT INTO materiaux (coutUnitaire, quantite, coutTransport,coefficientQualite) VALUES (?, ?, ?,?)";
+            String query = "INSERT INTO materiaux (nom,typecomposant,tauxtva,project_id,coutUnitaire, quantite, coutTransport,coefficientqualite) VALUES (?,?,?,?,?,?,?,?)";
             PreparedStatement pstmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-            pstmt.setDouble(1, materiaux.getCoutUnitaire());
-            pstmt.setDouble(2, materiaux.getQuantite());
-            pstmt.setDouble(3, materiaux.getCoutTransport());
-            pstmt.setDouble(4,materiaux.getCoefficientQualite());
+             pstmt.setString(1, materiaux.getName());
+            pstmt.setString(2, materiaux.getTypeComposant());
+            pstmt.setDouble(3, materiaux.getTauxTVA());
+            pstmt.setInt(4, id);
+            pstmt.setDouble(5, materiaux.getCoutUnitaire());
+            pstmt.setDouble(6, materiaux.getQuantite());
+            pstmt.setDouble(7, materiaux.getCoutTransport());
+            pstmt.setDouble(8,materiaux.getCoefficientQualite());
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows > 0) {
                 ResultSet generatedKeys = pstmt.getGeneratedKeys();
@@ -43,7 +47,7 @@ public class MateriauxRepository implements MateriauxInterface {
     @Override
     public Materiaux update(Materiaux materiaux, String nom)  {
         try {
-            String query = "UPDATE materiaux SET coutUnitaire = ?, quantite = ?, coutTransport = ?, coefficientQualite = ? WHERE nom = ?";
+            String query = "UPDATE materiaux SET coutUnitaire = ?, quantite = ?, coutTransport = ?, coefficientqualite = ? WHERE nom = ?";
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setDouble(1, materiaux.getCoutUnitaire());
             pstmt.setDouble(2, materiaux.getQuantite());
