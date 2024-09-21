@@ -30,16 +30,24 @@ public class ClientView {
                 System.out.println("Entrez le nom du client :");
                 String searchName = scanner.nextLine();
                 Optional<Client> client =  clientService.getClient(searchName);
-                if (client.isPresent()){   System.out.println(client);}else System.out.println("le nom que vous chercher n'existe pas");
-                System.out.println("voulez-vous ajouter un project a ce client(o/n)");
+                if (client.isPresent()) {
+                    System.out.println(client);
+                } else {
+                    System.out.println("Le nom que vous cherchez n'existe pas");
+                    return;
+                }
+                System.out.println("Voulez-vous ajouter un projet à ce client (o/n) ?");
                 String choise = scanner.nextLine();
-                while (choise.equals("o")){
+
+                while (choise.equalsIgnoreCase("o")) {
                     projectView.saveProject(client.get().getId());
+                    System.out.println("Voulez-vous ajouter un autre projet à ce client (o/n) ?");
+                    choise = scanner.nextLine();
                 }
 
-
-
+                System.out.println("Retour au menu principal.");
                 break;
+
             case 2:
 
                 System.out.println("enter le nom : ");

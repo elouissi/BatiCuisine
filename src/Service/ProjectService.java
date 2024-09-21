@@ -11,7 +11,7 @@ public class ProjectService {
 
     ProjectRepository projectRepository = new ProjectRepository();
 
-    public void saveProject(Project project, int clientId) throws SQLException {
-        projectRepository.add(project,clientId);
+    public Project saveProject(Project project, int clientId) throws SQLException {
+       return projectRepository.add(project,clientId);
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface Main_oeuvreInterface {
-    public Main_oeuvre add(Main_oeuvre mainOeuvre) throws SQLException;
+    public Main_oeuvre add(Main_oeuvre mainOeuvre,int id) throws SQLException;
     public Main_oeuvre update(Main_oeuvre mainOeuvre,String nom);
     public void delete(String nom);
     public List<Main_oeuvre> getAll();
