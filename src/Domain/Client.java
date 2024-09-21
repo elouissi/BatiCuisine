@@ -32,6 +32,13 @@ public class Client {
         this.estProfessionnel = estProfessionnel;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getNom() {
         return nom;
@@ -75,7 +82,7 @@ public class Client {
     @Override
     public String toString() {
         return "Client{" +
-                "id='1" + id + '\''+
+                "id='" + id + '\''+
                 "nom='" + nom + '\'' +
                 ", adresse='" + adresse + '\'' +
                 ", telephone='" + telephone + '\'' +

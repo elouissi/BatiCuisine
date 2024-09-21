@@ -3,13 +3,26 @@ package Domain;
 public abstract class Composant {
     public String name;
     public String typeComposant;
-    public String typeTVA;
+    public double tauxTVA;
+    public int id;
 
 
-    public Composant(String name, String typeComposant, String typeTVA) {
+    public Composant(String name, String typeComposant, double tauxTVA) {
         this.name = name;
         this.typeComposant = typeComposant;
-        this.typeTVA = typeTVA;
+        this.tauxTVA = tauxTVA;
+    }
+
+    public Composant() {
+
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -28,12 +41,12 @@ public abstract class Composant {
         this.typeComposant = typeComposant;
     }
 
-    public String getTypeTVA() {
-        return typeTVA;
+    public double getTauxTVA() {
+        return tauxTVA;
     }
 
-    public void setTypeTVA(String typeTVA) {
-        this.typeTVA = typeTVA;
+    public void setTauxTVA(double tauxTVA) {
+        this.tauxTVA = tauxTVA;
     }
 
     @Override
@@ -41,7 +54,7 @@ public abstract class Composant {
         return "Composant{" +
                 "name='" + name + '\'' +
                 ", typeComposant='" + typeComposant + '\'' +
-                ", typeTVA='" + typeTVA + '\'' +
+                ", tauxTVA='" + tauxTVA + '\'' +
                 '}';
     }
 }

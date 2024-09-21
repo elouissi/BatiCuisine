@@ -6,12 +6,27 @@ public class Project {
     public double margeBeneficiaire;
     public double coutTotal;
     public EtatProjet EtatProjet;
+    public int id;
+
+
 
     public Project(String nomProjet, double margeBeneficiaire, double coutTotal, EtatProjet etatProjet) {
         this.nomProjet = nomProjet;
         this.margeBeneficiaire = margeBeneficiaire;
         this.coutTotal = coutTotal;
         EtatProjet = etatProjet;
+    }
+
+    public Project() {
+
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNomProjet() {

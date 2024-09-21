@@ -12,6 +12,8 @@ public class ClientView {
 
     Scanner scanner = new Scanner(System.in);
     ClientService clientService = new ClientService();
+    ProjectView projectView = new ProjectView();
+
     public void SearchClient() throws SQLException {
         int choix = 0;
         System.out.println("--- Recherche de client ---\n");
@@ -29,6 +31,11 @@ public class ClientView {
                 String searchName = scanner.nextLine();
                 Optional<Client> client =  clientService.getClient(searchName);
                 if (client.isPresent()){   System.out.println(client);}else System.out.println("le nom que vous chercher n'existe pas");
+                System.out.println("voulez-vous ajouter un project a ce client(o/n)");
+                String choise = scanner.nextLine();
+                while (choise.equals("o")){
+                    projectView.saveProject(client.get().getId());
+                }
 
 
 
