@@ -1,5 +1,6 @@
 package Service;
 
+ import Domain.Client;
  import Domain.Project;
  import Repositorie.Project.ProjectRepository;
 
@@ -11,7 +12,7 @@ public class ProjectService {
 
     ProjectRepository projectRepository = new ProjectRepository();
 
-    public Project saveProject(Project project, int clientId) throws SQLException {
-       return projectRepository.add(project,clientId);
+    public Project saveProject(Project project, Client client) throws SQLException {
+       return projectRepository.add(project,client);
     }
 }

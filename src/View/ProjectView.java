@@ -1,5 +1,6 @@
 package View;
 
+import Domain.Client;
 import Domain.Project;
 import Enum.EtatProjet;
 import Service.ProjectService;
@@ -11,7 +12,7 @@ public class ProjectView {
     Scanner scanner = new Scanner(System.in);
     ProjectService projectService = new ProjectService();
     ComposantView composantView = new ComposantView();
-    public void saveProject(int clientId) throws SQLException {
+    public void saveProject( Client client) throws SQLException {
         System.out.println("Entrer le nom du projet :");
         String nom = scanner.nextLine();
         System.out.println("Entrer la marge bénéficiaire :");
@@ -20,7 +21,8 @@ public class ProjectView {
         System.out.println("Choisir l'état du projet (Terminé, En cours, Annulé) :");
         EtatProjet etatProject = EtatProjet.valueOf(scanner.nextLine());
         Project project = new Project(nom, margeBenif, 0.0, etatProject);
-        Project savedProject = projectService.saveProject(project, clientId);
+        System.out.println(client.id);
+        Project savedProject = projectService.saveProject(project, client);
         System.out.println("Projet ajouté avec succès : " + savedProject.getNomProjet());
         System.out.println("Voulez-vous ajouter des composants au projet ? (o/n)");
         String choix = scanner.nextLine();

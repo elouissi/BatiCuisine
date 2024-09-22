@@ -40,7 +40,7 @@ public class ClientView {
                 String choise = scanner.nextLine();
 
                 while (choise.equalsIgnoreCase("o")) {
-                    projectView.saveProject(client.get().getId());
+                     projectView.saveProject(client.get());
                     System.out.println("Voulez-vous ajouter un autre projet à ce client (o/n) ?");
                     choise = scanner.nextLine();
                 }
@@ -67,6 +67,15 @@ public class ClientView {
                 Client clientSave = clientService.saveClient(new Client(nom, adresse, telephone,estProfessionnel));
                 if (clientSave != null) {
                     System.out.println("Client ajouté avec succès !");
+                    System.out.println("Voulez-vous ajouter un projet à ce client (o/n) ?");
+                    String choix1 = scanner.nextLine();
+
+                     while (choix1.equalsIgnoreCase("o")) {
+                        projectView.saveProject(clientSave);
+                        System.out.println("Voulez-vous ajouter un autre projet à ce client (o/n) ?");
+                        choix1 = scanner.nextLine();
+                    }
+                     System.out.println("Retour au menu principal.");
                 } else {
                     System.out.println("Erreur : Un client avec ce nom existe déjà.");
                 }
@@ -89,6 +98,16 @@ public class ClientView {
                     Optional<Client> updatedClinet = clientService.getClient(nomUpdate);
                     if (updatedClinet.isPresent()) {
                         System.out.println("Client modifié avec succès !");
+                        System.out.println("Voulez-vous ajouter un projet à ce client (o/n) ?");
+                        String choise2 = scanner.nextLine();
+
+                        while (choise2.equalsIgnoreCase("o")) {
+                            projectView.saveProject(updatedClinet.get());
+                            System.out.println("Voulez-vous ajouter un autre projet à ce client (o/n) ?");
+                            choise2 = scanner.nextLine();
+                        }
+
+                        System.out.println("Retour au menu principal.");
                     } else {
                         System.out.println("Erreur : Un client avec ce nom existe déjà.");
                     }
