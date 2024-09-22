@@ -13,6 +13,7 @@ public class Client {
     public List<Project> ListProject = new ArrayList<>();
 
     public Client(String nom, String adresse, String telephone,boolean estProfessionnel) {
+        this.id = id;
         this.nom = nom;
         this.adresse = adresse;
         this.telephone = telephone;
@@ -79,6 +80,9 @@ public class Client {
         this.estProfessionnel = estProfessionnel;
     }
 
+    public void addProjectToList(Project project) {
+        this.ListProject.add(project);
+    }
     @Override
     public String toString() {
         return "Client{" +

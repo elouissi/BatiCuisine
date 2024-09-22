@@ -1,6 +1,7 @@
 package Repositorie.Project;
 
 import Config.Connection_DB;
+import Domain.Client;
 import Domain.Project;
 
 import java.sql.Connection;
@@ -20,7 +21,7 @@ public class ProjectRepository implements ProjectInterface {
 
 
     @Override
-    public Project add(Project project, int idClient) throws SQLException {
+    public Project add(Project project, Client client) throws SQLException {
         try {
             String query = "INSERT INTO projects (nomproject, margebeneficiaire, couttotal, etatproject, clientid) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -28,13 +29,16 @@ public class ProjectRepository implements ProjectInterface {
             pstmt.setDouble(2, project.getMargeBeneficiaire());
             pstmt.setDouble(3, project.getCoutTotal());
             pstmt.setObject(4, project.getEtatProjet(), java.sql.Types.OTHER);
-            pstmt.setInt(5,idClient);
+            pstmt.setInt(5,client.getId());
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows > 0){
                 ResultSet generatedKeys = pstmt.getGeneratedKeys();
                 if (generatedKeys.next()) {
                     project.id = generatedKeys.getInt(1);
                 }
+                client.addProjectToList(project);
+
+
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

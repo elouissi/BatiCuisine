@@ -23,16 +23,19 @@ public class ClientRepository implements ClientInterface {
     public Client add(Client client) throws SQLException {
         try {
             String query = "INSERT INTO clients (nom, adresse, telephone, estProfessionnel) VALUES (?, ?, ?, ?)";
-            PreparedStatement pstmt = conn.prepareStatement(query);
+             PreparedStatement pstmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, client.getNom());
             pstmt.setString(2, client.getAdresse());
             pstmt.setString(3, client.getTelephone());
             pstmt.setBoolean(4, client.isEstProfessionnel());
+
             int affectedRows = pstmt.executeUpdate();
-            if (affectedRows > 0){
-                ResultSet generatedKeys = pstmt.getGeneratedKeys();
+            if (affectedRows > 0) {
+                 ResultSet generatedKeys = pstmt.getGeneratedKeys();
                 if (generatedKeys.next()) {
-                    client.id = generatedKeys.getInt(1);
+                    client.setId(generatedKeys.getInt(1));
+                } else {
+                    throw new SQLException("L'ajout du client a échoué, aucun ID généré.");
                 }
             }
         } catch (SQLException e) {
