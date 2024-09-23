@@ -80,7 +80,7 @@ public class MateriauxRepository implements MateriauxInterface {
     public List<Materiaux> getAll()  {
         List<Materiaux> materiauxList = new ArrayList<>();
         try {
-            String query = "SELECT * FROM materiaux";
+            String query = "SELECT * FROM materiaux ";
             PreparedStatement pstmt = conn.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -92,6 +92,23 @@ public class MateriauxRepository implements MateriauxInterface {
         }
         return materiauxList;
     }
+    public List<Materiaux> getAllByProjectId(int projectId) {
+        List<Materiaux> materiauxList = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM materiaux WHERE project_id = ?";
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, projectId);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Materiaux materiaux = createMateriauxFromResultSet(rs);
+                materiauxList.add(materiaux);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return materiauxList;
+    }
+
 
     @Override
     public Optional<Materiaux> getById(int id)  {
@@ -126,6 +143,9 @@ public class MateriauxRepository implements MateriauxInterface {
     private Materiaux createMateriauxFromResultSet(ResultSet rs) throws SQLException {
         Materiaux materiaux = new Materiaux();
         materiaux.setId(rs.getInt("id"));
+        materiaux.setName(rs.getString("nom"));
+        materiaux.setTypeComposant(rs.getString("typecomposant"));
+        materiaux.setTauxTVA(rs.getDouble("tauxtva"));
         materiaux.setCoutUnitaire(rs.getDouble("coutUnitaire"));
         materiaux.setQuantite(rs.getDouble("quantite"));
         materiaux.setCoutTransport(rs.getDouble("coutTransport"));

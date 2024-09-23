@@ -2,11 +2,13 @@ package Repositorie.Main_oeuvre;
 
 import Config.Connection_DB;
 import Domain.Main_oeuvre;
+import Domain.Materiaux;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,6 +41,34 @@ public class Main_oeuvreRepository implements Main_oeuvreInterface{
         throw new RuntimeException(e);
     }
         return mainOeuvre;
+    }
+    public List<Main_oeuvre> getAllByProjectId(int projectId) {
+        List<Main_oeuvre> mainOeuvreList = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM main_oeuvre WHERE project_id = ?";
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, projectId);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Main_oeuvre mainOeuvre = createMain_oeuvreFromResultSet(rs);
+                mainOeuvreList.add(mainOeuvre);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return mainOeuvreList;
+    }
+
+     private Main_oeuvre createMain_oeuvreFromResultSet(ResultSet rs) throws SQLException {
+        Main_oeuvre mainOeuvre = new Main_oeuvre();
+        mainOeuvre.setId(rs.getInt("id"));
+        mainOeuvre.setName(rs.getString("nom"));
+        mainOeuvre.setTypeComposant(rs.getString("typecomposant"));
+        mainOeuvre.setTauxTVA(rs.getDouble("tauxtva"));
+        mainOeuvre.setTauxHoraire(rs.getDouble("tauxhoraire"));
+        mainOeuvre.setHeuresTravail(rs.getDouble("heurestravail"));
+        mainOeuvre.setProductiviteOuvrier(rs.getDouble("productiviteouvrier"));
+         return mainOeuvre;
     }
 
     @Override

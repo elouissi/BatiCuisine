@@ -5,6 +5,7 @@ import Domain.Materiaux;
 import Service.ComposantService;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 public class ComposantView {
@@ -50,5 +51,13 @@ public class ComposantView {
 
         }else System.out.println("choix invalid");
     }
+    public double calculerCoutTotalMateriaux(int projectId) {
+        return composantService.calculerCoutTotalMateriaux(projectId);
+    }
+    public Double calculeCoutTotaleMain_oeuvre(int projectId){
+        return composantService.calculeCoutTotaleMain_oeuvre(projectId);
+    }
+
+
 
 }

@@ -52,6 +52,10 @@ public class Materiaux extends Composant {
         this.coefficientQualite = coefficientQualite;
     }
 
+    public double calculerCoutTotal() {
+        return (quantite * coutUnitaire) +coutTransport;
+    }
+
     @Override
     public String toString() {
         return "Materiaux{" +

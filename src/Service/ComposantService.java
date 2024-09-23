@@ -9,6 +9,7 @@ import Repositorie.Main_oeuvre.Main_oeuvreRepository;
 import Repositorie.Materiaux.MateriauxRepository;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 public class ComposantService {
@@ -31,9 +32,22 @@ public class ComposantService {
             System.out.println("error de type");
 
         }
-
-
-
+    }
+    public double calculerCoutTotalMateriaux(int projectId) {
+        List<Materiaux> materiauxList = materiauxRepository.getAllByProjectId(projectId);
+        double coutTotal = 0.0;
+        for (Materiaux materiaux : materiauxList) {
+            coutTotal += materiaux.calculerCoutTotal();
+        }
+        return coutTotal;
+    }
+    public Double calculeCoutTotaleMain_oeuvre(int projectId){
+        List<Main_oeuvre>  main_oeuvreList = mainOeuvreRepository.getAllByProjectId(projectId);
+        double coutTotale = 0.0 ;
+        for (Main_oeuvre mainOeuvre : main_oeuvreList){
+            coutTotale += mainOeuvre.calculerCoutTotal();
+        }
+        return coutTotale;
 
     }
 }

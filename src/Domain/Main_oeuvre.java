@@ -5,6 +5,7 @@ public class Main_oeuvre extends Composant{
     public Double heuresTravail;
     public Double productiviteOuvrier;
 
+
     public Main_oeuvre(String name, String typeComposant, double tauxTVA, Double tauxHoraire, Double heuresTravail, Double productiviteOuvrier) {
         super(name, typeComposant, tauxTVA);
         this.tauxHoraire = tauxHoraire;
@@ -50,5 +51,9 @@ public class Main_oeuvre extends Composant{
 
     public void setProductiviteOuvrier(Double productiviteOuvrier) {
         this.productiviteOuvrier = productiviteOuvrier;
+    }
+
+    public double calculerCoutTotal() {
+        return tauxHoraire * heuresTravail * productiviteOuvrier;
     }
 }

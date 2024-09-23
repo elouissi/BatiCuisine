@@ -5,6 +5,12 @@ public abstract class Composant {
     public String typeComposant;
     public double tauxTVA;
     public int id;
+    public double quantite; // pour les matériaux
+    public double coutUnitaire; // pour les matériaux
+    public double coutTransport; // pour les matériaux
+    public double tauxHoraire; // pour la main-d'œuvre
+    public double heuresTravaillees; // pour la main-d'œuvre
+
 
 
     public Composant(String name, String typeComposant, double tauxTVA) {
@@ -49,12 +55,30 @@ public abstract class Composant {
         this.tauxTVA = tauxTVA;
     }
 
+     public double calculerCoutTotal() {
+        if (typeComposant.equals("Matériel")) {
+            return (coutUnitaire * quantite) + coutTransport;
+        } else if (typeComposant.equals("Main-d'œuvre")) {
+            return tauxHoraire * heuresTravaillees;
+        }
+        return 0;
+    }
+
+     public double calculerCoutAvecTVA() {
+        return calculerCoutTotal() * (1 + tauxTVA / 100);
+    }
+
     @Override
     public String toString() {
         return "Composant{" +
                 "name='" + name + '\'' +
                 ", typeComposant='" + typeComposant + '\'' +
                 ", tauxTVA='" + tauxTVA + '\'' +
+                ", quantite=" + quantite +
+                ", coutUnitaire=" + coutUnitaire +
+                ", coutTransport=" + coutTransport +
+                ", tauxHoraire=" + tauxHoraire +
+                ", heuresTravaillees=" + heuresTravaillees +
                 '}';
     }
 }
