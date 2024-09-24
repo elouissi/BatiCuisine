@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface ProjectInterface {
 
         public Project add(Project project, Client client) throws SQLException;
-        public Project update(Project project,String nom);
+        public Project update(Project project);
         public void delete(String nom);
         public List<Project> getAll();
         public Optional<Project> getById(int id);

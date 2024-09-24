@@ -18,13 +18,26 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         do {
-            System.out.println("-----------------------//=== Bienvenue dans l'application de gestion des projets de rénovation de cuisines ===//--------------");
-            System.out.println("--------------------------------------------------=== Menu Principal ===-----------------------------------------------------\n");
-            System.out.println("// 1 - Créer un nouveau projet");
-            System.out.println("// 2 - Afficher les projets existants");
-            System.out.println("// 3 - Calculer le coût d'un projet");
-            System.out.println("// 5 - Exit");
-            System.out.println("-----------------------------------------------------------------------------");
+            System.out.println("╔══════════════════════════════════════════════════════════════════════════════╗");
+            System.out.println("║                                                                              ║");
+            System.out.println("║   ★★ Bienvenue dans l'application de gestion des projets de rénovation ★★    ║");
+            System.out.println("║                       ★★★ de cuisines ★★★                                    ║");
+            System.out.println("║                                                                              ║");
+            System.out.println("╠══════════════════════════════════════════════════════════════════════════════╣");
+            System.out.println("║                                                                              ║");
+            System.out.println("║                           ✨ Menu Principal ✨                                ║");
+            System.out.println("║                                                                              ║");
+            System.out.println("╠══════════════════════════════════════════════════════════════════════════════╣");
+            System.out.println("║                                                                              ║");
+            System.out.println("║   1️⃣  ➜ Créer un nouveau projet                                              ║");
+            System.out.println("║   2️⃣  ➜ Afficher les projets existants                                       ║");
+            System.out.println("║   3️⃣  ➜ Calculer le coût d'un projet                                         ║");
+            System.out.println("║   4️⃣  ➜ Quitter l'application                                                ║");
+            System.out.println("║                                                                              ║");
+            System.out.println("╠══════════════════════════════════════════════════════════════════════════════╣");
+            System.out.println("║               🛠️  Veuillez entrer un numéro pour faire un choix :             ║");
+            System.out.println("╚══════════════════════════════════════════════════════════════════════════════╝");
+
             choix = scanner.nextInt();
             scanner.nextLine();
 
@@ -35,8 +48,18 @@ public class Main {
                 clientView.SearchClient();
 
                 break;
+
+                case 2:
+
+                    projectView.getAll();
+
+                    break;
+                case 3:
+
+                    projectView.searchProject();
+                    break;
             }
-        }while (choix != 5);
+        }while (choix != 4);
 
 
 

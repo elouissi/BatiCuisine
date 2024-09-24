@@ -11,7 +11,7 @@ public class Materiaux extends Composant {
 
     public Materiaux(String name, String typeComposant, double tauxTVA, Double coutUnitaire, Double quantite, Double coutTransport, Double coefficientQualite) {
         super(name, typeComposant, tauxTVA);
-        this.coutUnitaire = coutUnitaire;
+         this.coutUnitaire = coutUnitaire;
         this.quantite = quantite;
         this.coutTransport = coutTransport;
         this.coefficientQualite = coefficientQualite;
@@ -19,6 +19,15 @@ public class Materiaux extends Composant {
 
     public Materiaux() {
 
+    }
+
+    public Materiaux(int id, String nom, String type, double tva, double quantite, double coutUnitaire, double coutTransport,double coefficientQualite) {
+        super(nom, type, tva);
+        this.id = id;
+        this.coutUnitaire = coutUnitaire;
+        this.quantite = quantite;
+        this.coutTransport = coutTransport;
+        this.coefficientQualite = coefficientQualite;
     }
 
     public Double getCoutUnitaire() {

@@ -10,6 +10,7 @@ import Repositorie.Materiaux.MateriauxRepository;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class ComposantService {
@@ -29,6 +30,8 @@ public class ComposantService {
         }else if(composant instanceof Main_oeuvre){
             Main_oeuvre mainOeuvre = (Main_oeuvre) composant;
             mainOeuvreRepository.add(mainOeuvre,id);
+
+        }else {
             System.out.println("error de type");
 
         }
@@ -50,4 +53,21 @@ public class ComposantService {
         return coutTotale;
 
     }
+    public void updateTvaForComposant(int idComposant, double tauxTVA) throws SQLException {
+         Optional<Composant> composantOptional = composantRepository.getById(idComposant);
+
+        if (composantOptional.isPresent()) {
+            Composant composant = composantOptional.get();
+            composant.setTauxTVA(tauxTVA);
+
+            composantRepository.update(composant,composant.getName());
+            System.out.println("✔️ TVA mise à jour pour le composant " + composant.getName());
+        } else {
+            System.out.println("❌ Composant non trouvé.");
+        }
+    }
+    public List<Composant> findComposantsByProjectId(int id) throws SQLException {
+        return composantRepository.findComposantsByProjectId(id);
+    }
+
 }

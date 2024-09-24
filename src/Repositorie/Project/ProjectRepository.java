@@ -3,7 +3,7 @@ package Repositorie.Project;
 import Config.Connection_DB;
 import Domain.Client;
 import Domain.Project;
-
+import java.sql.Types;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -34,7 +34,7 @@ public class ProjectRepository implements ProjectInterface {
             if (affectedRows > 0){
                 ResultSet generatedKeys = pstmt.getGeneratedKeys();
                 if (generatedKeys.next()) {
-                    project.id = generatedKeys.getInt(1);
+                    project.setId(generatedKeys.getInt(1));
                 }
                 client.addProjectToList(project);
 
@@ -47,15 +47,15 @@ public class ProjectRepository implements ProjectInterface {
     }
 
     @Override
-    public Project update(Project project, String nom) {
+    public Project update(Project project) {
         try {
-            String query = "UPDATE projects SET nomproject = ?, margebeneficiaire = ?, couttotal = ?, etatproject = ? WHERE nomproject = ?";
-            PreparedStatement pstmt = conn.prepareStatement(query);
+            String query = "UPDATE projects SET nomproject = ?, margebeneficiaire = ?, couttotal = ?, etatproject = ? WHERE id = ?";
+            PreparedStatement pstmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, project.getNomProjet());
             pstmt.setDouble(2, project.getMargeBeneficiaire());
             pstmt.setDouble(3, project.getCoutTotal());
-            pstmt.setObject(4, project.getEtatProjet(), java.sql.Types.OTHER);
-            pstmt.setString(5, nom);
+            pstmt.setObject(4, project.getEtatProjet().name(), Types.OTHER);
+            pstmt.setInt(5, project.getId());
 
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows > 0) {

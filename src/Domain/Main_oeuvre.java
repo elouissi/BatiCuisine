@@ -12,6 +12,14 @@ public class Main_oeuvre extends Composant{
         this.heuresTravail = heuresTravail;
         this.productiviteOuvrier = productiviteOuvrier;
     }
+    public Main_oeuvre(int id,String name, String typeComposant, double tauxTVA, Double tauxHoraire, Double heuresTravail, Double productiviteOuvrier) {
+        super(name, typeComposant, tauxTVA);
+        this.id = id;
+        this.tauxHoraire = tauxHoraire;
+        this.heuresTravail = heuresTravail;
+        this.productiviteOuvrier = productiviteOuvrier;
+    }
+
 
     public Main_oeuvre() {
 

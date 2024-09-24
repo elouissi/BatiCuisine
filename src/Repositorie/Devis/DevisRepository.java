@@ -17,7 +17,7 @@ public class DevisRepository implements DevisInterface{
     public Devis add(Devis devis, int id) throws SQLException {
         try {
             String query = "INSERT INTO devis (montantestimate, dateemission, datevalidite,accepte, projectid) VALUES (?, ?, ?, ?,?)";
-            PreparedStatement pstmt = conn.prepareStatement(query);
+            PreparedStatement pstmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
             pstmt.setDouble(1, devis.getMontantEstime());
             pstmt.setDate(2, Date.valueOf(devis.dateEmission));
             pstmt.setDate(3, Date.valueOf(devis.getDateValidite()));
@@ -54,7 +54,9 @@ public class DevisRepository implements DevisInterface{
             ResultSet rs = selectPstmt.executeQuery();
 
             if (rs.next()) {
-                updatedDevis = new Devis(rs.getDouble("montantestimate"), rs.getDate("dateemission").toLocalDate(), rs.getDate("datevalidite").toLocalDate(), rs.getBoolean("accepte"));
+                devis.setId(id);
+                devis.setAccepte(true);
+                return devis;
             }
 
         } catch (Exception e) {

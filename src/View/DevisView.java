@@ -32,14 +32,18 @@ public class DevisView {
         }
     }
     public Devis updateAccepte(Devis devis){
-        System.out.println("en tant que tu es un client vous devez soit accepte ou refuse ce devis "+devis+"avant cette date"+devis.getDateValidite());
+        System.out.println("vous devez soit accepte ou refuse ce devis de montant  "+devis.getMontantEstime()+"$ avant cette date"+devis.getDateValidite());
         System.out.println("o/n");
         String choix = scanner.nextLine();
-        if (choix.equalsIgnoreCase("y")){
+        if (choix.equalsIgnoreCase("o")){
             Devis UpdatedDevis = new Devis(devis.getMontantEstime(),devis.getDateEmission(),devis.getDateValidite(),true);
             return devisService.updateAccepte(UpdatedDevis,devis.getId());
-        }
-        return null;
+        } else if (choix.equalsIgnoreCase("n")) {
+            System.out.println("non");
+            Devis UpdatedDevis = new Devis(devis.getMontantEstime(),devis.getDateEmission(),devis.getDateValidite(),false);
+            return devisService.updateAccepte(UpdatedDevis,devis.getId());
+
+        }else return null;
 
     }
 }

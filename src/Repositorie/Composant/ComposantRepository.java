@@ -16,7 +16,7 @@ import java.util.Optional;
 public class ComposantRepository implements ComposantInterface {
     private Connection conn;
 
-    public void ComposantRepository() {
+    public  ComposantRepository() {
         this.conn = Connection_DB.getInstance().Connect_to_DB();
     }
 
@@ -45,12 +45,11 @@ public class ComposantRepository implements ComposantInterface {
     @Override
     public Composant update(Composant composant, String nom) {
         try {
-            String query = "UPDATE composants SET nom = ?, typecomposant = ?, tauxtva = ? WHERE nom = ?";
+            String query = "UPDATE composants SET nom = ?, tauxtva = ? WHERE nom = ?";
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setString(1, composant.getName());
-            pstmt.setString(2, composant.getTypeComposant());
-            pstmt.setDouble(3, composant.getTauxTVA());
-            pstmt.setString(4, nom);
+             pstmt.setDouble(2, composant.getTauxTVA());
+            pstmt.setString(3, nom);
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows > 0) {
                 return composant;
@@ -123,12 +122,12 @@ public class ComposantRepository implements ComposantInterface {
     private Composant createComposantFromResultSet(ResultSet rs) throws SQLException {
         String typeComposant = rs.getString("typecomposant");
 
-        if (typeComposant.equals("Materiaux")) {
+        if (typeComposant.equals("matériaux")) {
             Materiaux materiaux = new Materiaux();
             materiaux.setName(rs.getString("nom"));
             materiaux.setTauxTVA(rs.getDouble("tauxtva"));
              return materiaux;
-        } else if (typeComposant.equals("MainOeuvre")) {
+        } else if (typeComposant.equals("main_oeuvre")) {
             Main_oeuvre mainOeuvre = new Main_oeuvre();
             mainOeuvre.setName(rs.getString("nom"));
             mainOeuvre.setTauxTVA(rs.getDouble("tauxtva"));
@@ -137,4 +136,48 @@ public class ComposantRepository implements ComposantInterface {
             throw new RuntimeException("Type de composant inconnu: " + typeComposant);
         }
     }
+
+    public List<Composant> findComposantsByProjectId(int projectId) throws SQLException {
+        List<Composant> composants = new ArrayList<>();
+
+         String queryMateriaux = "SELECT * FROM Materiaux WHERE project_id = ?";
+        PreparedStatement statementMateriaux = conn.prepareStatement(queryMateriaux);
+        statementMateriaux.setInt(1, projectId);
+        ResultSet resultSetMateriaux = statementMateriaux.executeQuery();
+
+        while (resultSetMateriaux.next()) {
+            int id = resultSetMateriaux.getInt("id");
+            String nom = resultSetMateriaux.getString("nom");
+            String type = resultSetMateriaux.getString("typecomposant");
+            double tva = resultSetMateriaux.getDouble("tauxtva");
+            double quantite = resultSetMateriaux.getDouble("quantite");
+            double coutUnitaire = resultSetMateriaux.getDouble("coutunitaire");
+            double coutTransport = resultSetMateriaux.getDouble("couttransport");
+            double coefficientQualite = resultSetMateriaux.getDouble("coefficientqualite");
+
+            Materiaux materiaux = new Materiaux(id,nom, "matériaux", tva, quantite, coutUnitaire, coutTransport,coefficientQualite);
+            composants.add(materiaux);
+        }
+
+         String queryMainOeuvre = "SELECT * FROM Main_oeuvre WHERE project_id = ?";
+        PreparedStatement statementMainOeuvre = conn.prepareStatement(queryMainOeuvre);
+        statementMainOeuvre.setInt(1, projectId);
+        ResultSet resultSetMainOeuvre = statementMainOeuvre.executeQuery();
+
+        while (resultSetMainOeuvre.next()) {
+            int id = resultSetMainOeuvre.getInt("id");
+            String nom = resultSetMainOeuvre.getString("nom");
+            String type = resultSetMainOeuvre.getString("typecomposant");
+            double tva = resultSetMainOeuvre.getDouble("tauxtva");
+            double tauxHoraire = resultSetMainOeuvre.getDouble("tauxhoraire");
+            double heuresTravaillees = resultSetMainOeuvre.getDouble("heurestravail");
+            double productiviteOuvrier = resultSetMainOeuvre.getDouble("productiviteouvrier");
+
+            Main_oeuvre mainOeuvre = new Main_oeuvre(id,nom, "main_oeuvre", tva, tauxHoraire, heuresTravaillees, productiviteOuvrier);
+            composants.add(mainOeuvre);
+        }
+
+        return composants;
+    }
+
 }

@@ -18,6 +18,12 @@ public abstract class Composant {
         this.typeComposant = typeComposant;
         this.tauxTVA = tauxTVA;
     }
+    public Composant(int id,String name, String typeComposant, double tauxTVA){
+        this.id = id;
+        this.name = name;
+        this.typeComposant = typeComposant;
+        this.tauxTVA = tauxTVA;
+    }
 
     public Composant() {
 
