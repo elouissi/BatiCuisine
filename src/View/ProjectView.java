@@ -74,7 +74,7 @@ public class ProjectView {
         }
         double remise = 0.0 ;
         if (client.estProfessionnel){
-            System.out.println("🏢 Ce client est professionnel. Souhaitez-vous appliquer une remise ? (o/n)");
+            System.out.println(" Ce client est professionnel. Souhaitez-vous appliquer une remise ? (o/n)");
             String choix2 = scanner.nextLine();
             if (choix2.equalsIgnoreCase("o")){
                 System.out.println("Entrez le remise (%) : ");

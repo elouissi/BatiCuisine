@@ -172,8 +172,9 @@ public class ComposantRepository implements ComposantInterface {
             double tauxHoraire = resultSetMainOeuvre.getDouble("tauxhoraire");
             double heuresTravaillees = resultSetMainOeuvre.getDouble("heurestravail");
             double productiviteOuvrier = resultSetMainOeuvre.getDouble("productiviteouvrier");
+            String type_main_œuvre = resultSetMainOeuvre.getString("type_main_œuvre");
 
-            Main_oeuvre mainOeuvre = new Main_oeuvre(id,nom, "main_oeuvre", tva, tauxHoraire, heuresTravaillees, productiviteOuvrier);
+            Main_oeuvre mainOeuvre = new Main_oeuvre(id,nom, "main_oeuvre", tva, tauxHoraire, heuresTravaillees, productiviteOuvrier,type_main_œuvre);
             composants.add(mainOeuvre);
         }
 

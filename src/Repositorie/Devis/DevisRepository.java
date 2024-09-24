@@ -40,29 +40,33 @@ public class DevisRepository implements DevisInterface{
     public Devis update(Devis devis, int id) {
         Devis updatedDevis = null;
         try {
-            String updateQuery = "UPDATE devis SET montantestimate = ?, dateemission = ?, datevalidite= ?,accepte=? WHERE id = ?";
+            String updateQuery = "UPDATE devis SET montantestimate = ?, dateemission = ?, datevalidite = ?, accepte = ? WHERE id = ?";
             PreparedStatement updatePstmt = conn.prepareStatement(updateQuery);
             updatePstmt.setDouble(1, devis.getMontantEstime());
             updatePstmt.setDate(2, Date.valueOf(devis.getDateEmission()));
             updatePstmt.setDate(3, Date.valueOf(devis.getDateValidite()));
-            updatePstmt.setBoolean(4, devis.isAccepte());
+            updatePstmt.setBoolean(4, devis.isAccepte()); // Utilisez la valeur correcte ici
             updatePstmt.setInt(5, id);
             updatePstmt.executeUpdate();
-            String selectQuery = "SELECT * FROM devis WHERE id = ?";
+
+             String selectQuery = "SELECT * FROM devis WHERE id = ?";
             PreparedStatement selectPstmt = conn.prepareStatement(selectQuery);
             selectPstmt.setInt(1, id);
             ResultSet rs = selectPstmt.executeQuery();
 
             if (rs.next()) {
-                devis.setId(id);
-                devis.setAccepte(true);
-                return devis;
+                 updatedDevis = new Devis(rs.getDouble("montantestimate"),
+                        rs.getDate("dateemission").toLocalDate(),
+                        rs.getDate("datevalidite").toLocalDate(),
+                        rs.getBoolean("accepte"));
+                updatedDevis.setId(id);
             }
 
         } catch (Exception e) {
-            System.out.println("Error updating user: " + e);
+            System.out.println("Error updating devis: " + e.getMessage());
         }
-        return updatedDevis;    }
+        return updatedDevis;
+    }
 
     @Override
     public void delete(String nom) {

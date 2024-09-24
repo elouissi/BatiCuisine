@@ -61,9 +61,17 @@ public class ComposantView {
             System.out.print("→ Veuillez entrer la productivité : ");
             Double productivite = scanner.nextDouble();
             scanner.nextLine();
+            if (productivite > 1.00){
+                Main_oeuvre mainOeuvre = new Main_oeuvre(nom, "main_oeuvre", 0, taux, heure, productivite,"Ouvrier_spécialisé");
+                composantService.saveComposant(mainOeuvre, idProject);
 
-            Main_oeuvre mainOeuvre = new Main_oeuvre(nom, "main_oeuvre", 0, taux, heure, productivite);
-            composantService.saveComposant(mainOeuvre, idProject);
+
+            } else if (productivite <= 1.00) {
+                Main_oeuvre mainOeuvre = new Main_oeuvre(nom, "main_oeuvre", 0, taux, heure, productivite," Ouvrier de base");
+                composantService.saveComposant(mainOeuvre, idProject);
+
+            }
+
 
             System.out.println("✔️ Main-d'œuvre ajoutée avec succès.");
         } else {
