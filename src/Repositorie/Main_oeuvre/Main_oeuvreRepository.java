@@ -21,7 +21,7 @@ public class Main_oeuvreRepository implements Main_oeuvreInterface{
     @Override
     public Main_oeuvre add(Main_oeuvre mainOeuvre ,int id) throws SQLException {
         try {
-        String query = "INSERT INTO main_oeuvre (nom,typecomposant,tauxtva,project_id,tauxhoraire, heurestravail, productiviteouvrier,type_main_œuvre) VALUES (?,?,?,?,?,?,?,?)";
+        String query = "INSERT INTO main_oeuvre (nom,typecomposant,tauxtva,project_id,tauxhoraire, heurestravail, productiviteouvrier,type_main_oeuvre) VALUES (?,?,?,?,?,?,?,?)";
         PreparedStatement pstmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
         pstmt.setString(1, mainOeuvre.getName());
         pstmt.setString(2, mainOeuvre.getTypeComposant());
@@ -30,7 +30,7 @@ public class Main_oeuvreRepository implements Main_oeuvreInterface{
         pstmt.setDouble(5, mainOeuvre.getTauxHoraire());
         pstmt.setDouble(6, mainOeuvre.getHeuresTravail());
         pstmt.setDouble(7, mainOeuvre.getProductiviteOuvrier());
-        pstmt.setString(8,mainOeuvre.getType_main_œuvre());
+        pstmt.setString(8,mainOeuvre.getType_main_oeuvre());
          int affectedRows = pstmt.executeUpdate();
         if (affectedRows > 0) {
             ResultSet generatedKeys = pstmt.getGeneratedKeys();
@@ -69,7 +69,7 @@ public class Main_oeuvreRepository implements Main_oeuvreInterface{
         mainOeuvre.setTauxHoraire(rs.getDouble("tauxhoraire"));
         mainOeuvre.setHeuresTravail(rs.getDouble("heurestravail"));
         mainOeuvre.setProductiviteOuvrier(rs.getDouble("productiviteouvrier"));
-        mainOeuvre.setType_main_œuvre(rs.getString("type_main_œuvre"));
+        mainOeuvre.setType_main_oeuvre(rs.getString("type_main_oeuvre"));
          return mainOeuvre;
     }
 

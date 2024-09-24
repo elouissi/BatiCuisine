@@ -3,6 +3,7 @@ package View;
 import Domain.Devis;
 import Service.ComposantService;
 import Service.DevisService;
+import Utils.CheckInput;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -56,8 +57,8 @@ public class DevisView {
     }
     public Devis updateAccepte(Devis devis){
         System.out.println("vous devez soit accepte ou refuse ce devis de montant  "+devis.getMontantEstime()+"$ avant cette date"+devis.getDateValidite());
-        System.out.println("o/n");
-        String choix = scanner.nextLine();
+
+        String choix = CheckInput.readString("o/n");
         if (choix.equalsIgnoreCase("o")){
             Devis UpdatedDevis = new Devis(devis.getMontantEstime(),devis.getDateEmission(),devis.getDateValidite(),true);
             return devisService.updateAccepte(UpdatedDevis,devis.getId());

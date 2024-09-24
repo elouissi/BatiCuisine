@@ -14,71 +14,64 @@ public class ComposantView {
     ComposantService composantService = new ComposantService();
 
     public void saveComposant(int idProject) throws SQLException {
-        System.out.println("╔════════════════════════════════════════╗");
-        System.out.println("║     Ajout d'un nouveau composant       ║");
-        System.out.println("╚════════════════════════════════════════╝");
+        System.out.println("//=======================================//");
+        System.out.println("//     Ajout d'un nouveau composant      //");
+        System.out.println("//=======================================//");
 
-        System.out.print("→ Veuillez entrer le nom du composant : ");
-        String nom = scanner.nextLine();
 
-        System.out.println("╔════════════════════════════════════════╗");
-        System.out.println("║     Veuillez choisir le type du composant :    ║");
-        System.out.println("╚════════════════════════════════════════╝");
-        System.out.println(" 1 - Matériel");
+        String nom = CheckInput.readString("→ Veuillez entrer le nom du composant : ");
+
+        System.out.println("//=======================================//");
+        System.out.println("//Veuillez choisir le type du composant ://");
+        System.out.println("//=======================================//");
+        System.out.println(" 1 - Materiel");
         System.out.println(" 2 - Main-d'œuvre");
 
-        int choix = scanner.nextInt();
-        scanner.nextLine();
+
+        int choix = CheckInput.readInt("choix:");
 
         if (choix == 1) {
-            System.out.print("→ Veuillez entrer la quantité de matériel (en m²) : ");
-            Double quantite = scanner.nextDouble();
-            scanner.nextLine();
 
-            System.out.print("→ Veuillez entrer le coût unitaire (€/m²) : ");
-            Double coutUnitaire = scanner.nextDouble();
-            scanner.nextLine();
+            double quantite = CheckInput.readDouble("-> Veuillez entrer la quantite de materiel (en m²) : ");
 
-            System.out.print("→ Veuillez entrer le coût du transport (€) : ");
-            Double coutTransport = scanner.nextDouble();
-            scanner.nextLine();
+            double coutUnitaire = CheckInput.readDouble("-> Veuillez entrer le coût unitaire (€/m²) : ");
 
-            System.out.print("→ Veuillez entrer le coefficient de qualité : ");
-            Double coefficient = scanner.nextDouble();
-            scanner.nextLine();
+            double coutTransport = CheckInput.readDouble("-> Veuillez entrer le coût du transport (€) : ");
+
+            double coefficient = CheckInput.readDouble("-> Veuillez entrer le coefficient de qualite  (1.0 = standard, > 1.0 = haute qualité) : ");
+
 
             Materiaux materiaux = new Materiaux(nom, "matériaux", 0, coutUnitaire, quantite, coutTransport, coefficient);
             composantService.saveComposant(materiaux, idProject);
 
-            System.out.println("✔️ Matériau ajouté avec succès.");
+            System.out.println(" Materiau ajoute avec succès.");
         } else if (choix == 2) {
-            System.out.print("→ Veuillez entrer le taux horaire (€/h) : ");
-            Double taux = scanner.nextDouble();
-            scanner.nextLine();
 
-            double heure = CheckInput.readDouble("→ Veuillez entrer le nombre d'heures de travail : ");
+            double taux = CheckInput.readDouble(" Veuillez entrer le taux horaire (€/h) : ");
 
-            System.out.print("→ Veuillez entrer la productivité : ");
-            Double productivite = scanner.nextDouble();
-            scanner.nextLine();
+            double heure = CheckInput.readDouble(" Veuillez entrer le nombre d'heures de travail : ");
+
+            double productivite = CheckInput.readDouble("-> Veuillez entrer la productivite : ");
+
             if (productivite > 1.00){
+
                 Main_oeuvre mainOeuvre = new Main_oeuvre(nom, "main_oeuvre", 0, taux, heure, productivite,"Ouvrier_spécialisé");
                 composantService.saveComposant(mainOeuvre, idProject);
 
-
             } else if (productivite <= 1.00) {
+
                 Main_oeuvre mainOeuvre = new Main_oeuvre(nom, "main_oeuvre", 0, taux, heure, productivite," Ouvrier de base");
                 composantService.saveComposant(mainOeuvre, idProject);
 
             }
 
 
-            System.out.println("✔️ Main-d'œuvre ajoutée avec succès.");
+            System.out.println(" Main-d'œuvre ajoutee avec succès.");
         } else {
-            System.out.println("❌ Choix invalide. Veuillez réessayer.");
+            System.out.println(" Choix invalide. Veuillez reessayer.");
         }
 
-        System.out.println("══════════════════════════════════════════");
+        System.out.println("//=======================================//");
     }
     public double calculerCoutTotalMateriaux(int projectId) {
         return composantService.calculerCoutTotalMateriaux(projectId);

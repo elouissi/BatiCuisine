@@ -1,4 +1,5 @@
 import Config.Connection_DB;
+import Utils.CheckInput;
 import View.ClientView;
 import View.ProjectView;
 
@@ -18,28 +19,28 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         do {
-            System.out.println("╔══════════════════════════════════════════════════════════════════════════════╗");
-            System.out.println("║                                                                              ║");
-            System.out.println("║   ★★ Bienvenue dans l'application de gestion des projets de rénovation ★★    ║");
-            System.out.println("║                       ★★★ de cuisines ★★★                                    ║");
-            System.out.println("║                                                                              ║");
-            System.out.println("╠══════════════════════════════════════════════════════════════════════════════╣");
-            System.out.println("║                                                                              ║");
-            System.out.println("║                           ✨ Menu Principal ✨                                ║");
-            System.out.println("║                                                                              ║");
-            System.out.println("╠══════════════════════════════════════════════════════════════════════════════╣");
-            System.out.println("║                                                                              ║");
-            System.out.println("║   1️⃣  ➜ Créer un nouveau projet                                              ║");
-            System.out.println("║   2️⃣  ➜ Afficher les projets existants                                       ║");
-            System.out.println("║   3️⃣  ➜ Calculer le coût d'un projet                                         ║");
-            System.out.println("║   4️⃣  ➜ Quitter l'application                                                ║");
-            System.out.println("║                                                                              ║");
-            System.out.println("╠══════════════════════════════════════════════════════════════════════════════╣");
-            System.out.println("║               🛠️  Veuillez entrer un numéro pour faire un choix :             ║");
-            System.out.println("╚══════════════════════════════════════════════════════════════════════════════╝");
+            System.out.println("//==============================================================================//");
+            System.out.println("//                                                                              //");
+            System.out.println("//      Bienvenue dans l'application de gestion des projets de rénovation       //");
+            System.out.println("//                            de cuisines                                       //");
+            System.out.println("//                                                                              //");
+            System.out.println("//==============================================================================//");
+            System.out.println("//                                                                               //");
+            System.out.println("//                             Menu Principal                                    //");
+            System.out.println("//                                                                               //");
+            System.out.println("//==============================================================================//");
+            System.out.println("//                                                                              //");
+            System.out.println("//   1  -> Créer un nouveau projet                                              //");
+            System.out.println("//   2  -> Afficher les projets existants                                       //");
+            System.out.println("//   3  -> Calculer le coût d'un projet                                         //");
+            System.out.println("//   4  -> Quitter l'application                                                //");
+            System.out.println("//                                                                              //");
+            System.out.println("//==============================================================================//");
+            System.out.println("//                 Veuillez entrer un numéro pour faire un choix :              //");
+            System.out.println("//==============================================================================//");
 
-            choix = scanner.nextInt();
-            scanner.nextLine();
+
+            choix = CheckInput.readInt("");
 
             switch (choix) {
 

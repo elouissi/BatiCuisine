@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
-public class ComposantService {
+public class ComposantService implements Service.interfaces.ComposantInterface {
 
     private Scanner scanner;
 
@@ -22,7 +22,8 @@ public class ComposantService {
     Main_oeuvreRepository mainOeuvreRepository = new Main_oeuvreRepository();
 
 
-    public void saveComposant(Composant composant,int id) throws SQLException {
+    @Override
+    public void saveComposant(Composant composant, int id) throws SQLException {
         if (composant instanceof Materiaux){
             Materiaux materiaux = (Materiaux) composant;
             materiauxRepository.add(materiaux,id);
@@ -36,6 +37,7 @@ public class ComposantService {
 
         }
     }
+    @Override
     public double calculerCoutTotalMateriaux(int projectId) {
         List<Materiaux> materiauxList = materiauxRepository.getAllByProjectId(projectId);
         double coutTotal = 0.0;
@@ -44,6 +46,7 @@ public class ComposantService {
         }
         return coutTotal;
     }
+    @Override
     public Double calculeCoutTotaleMain_oeuvre(int projectId){
         List<Main_oeuvre>  main_oeuvreList = mainOeuvreRepository.getAllByProjectId(projectId);
         double coutTotale = 0.0 ;
@@ -53,6 +56,7 @@ public class ComposantService {
         return coutTotale;
 
     }
+    @Override
     public void updateTvaForComposant(int idComposant, double tauxTVA) throws SQLException {
          Optional<Composant> composantOptional = composantRepository.getById(idComposant);
 
@@ -61,11 +65,12 @@ public class ComposantService {
             composant.setTauxTVA(tauxTVA);
 
             composantRepository.update(composant,composant.getName());
-            System.out.println("✔️ TVA mise à jour pour le composant " + composant.getName());
+            System.out.println(" TVA mise à jour pour le composant " + composant.getName());
         } else {
-            System.out.println("❌ Composant non trouvé.");
+            System.out.println(" Composant non trouve.");
         }
     }
+    @Override
     public List<Composant> findComposantsByProjectId(int id) throws SQLException {
         return composantRepository.findComposantsByProjectId(id);
     }
