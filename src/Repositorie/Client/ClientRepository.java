@@ -2,7 +2,8 @@ package Repositorie.Client;
 
 import Config.Connection_DB;
 import Domain.Client;
-
+import Domain.Project;
+import Enum.EtatProjet;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -83,22 +84,55 @@ public class ClientRepository implements ClientInterface {
         }
      }
 
+
     @Override
     public List<Client> getAll() {
         List<Client> clients = new ArrayList<>();
         try {
-            String query = "SELECT * FROM clients";
-            PreparedStatement pstmt = conn.prepareStatement(query);
-            ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-                clients.add(new Client(rs.getInt("id"),rs.getString("nom"), rs.getString("adresse"), rs.getString("telephone"), rs.getBoolean("estProfessionnel")));
+            // Récupérer tous les clients
+            String clientQuery = "SELECT * FROM clients";
+            PreparedStatement clientPstmt = conn.prepareStatement(clientQuery);
+            ResultSet clientRs = clientPstmt.executeQuery();
+
+            while (clientRs.next()) {
+                // Créer l'objet Client
+                Client client = new Client(
+                        clientRs.getInt("id"),
+                        clientRs.getString("nom"),
+                        clientRs.getString("adresse"),
+                        clientRs.getString("telephone"),
+                        clientRs.getBoolean("estProfessionnel")
+                );
+
+                // Récupérer les projets associés à ce client
+                String projectQuery = "SELECT * FROM projects WHERE clientid = ?";
+                PreparedStatement projectPstmt = conn.prepareStatement(projectQuery);
+                projectPstmt.setInt(1, client.getId());
+                ResultSet projectRs = projectPstmt.executeQuery();
+
+                List<Project> projects = new ArrayList<>();
+                while (projectRs.next()) {
+                    Project project = new Project();
+                    project.setId(projectRs.getInt("id"));
+                    project.setNomProjet(projectRs.getString("nomproject"));
+                    project.setMargeBeneficiaire(projectRs.getDouble("margebeneficiaire"));
+                    project.setCoutTotal(projectRs.getDouble("couttotal"));
+                    project.setEtatProjet(EtatProjet.valueOf(projectRs.getString("etatproject")));
+
+                    projects.add(project);
+                }
+
+                client.setListProject(projects);
+
+                clients.add(client);
             }
-            return clients;
 
         } catch (Exception e) {
-            System.out.println("Error getting clients: " + e);
+            System.out.println("Error getting clients with projects: " + e.getMessage());
         }
-        return clients;    }
+        return clients;
+    }
+
 
     @Override
     public Optional<Client> getById(int id) {

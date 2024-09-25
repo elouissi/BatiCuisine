@@ -1,6 +1,7 @@
 package View;
 
 import Domain.Client;
+import Domain.Project;
 import Service.ClientService;
 import Utils.CheckInput;
 
@@ -56,7 +57,7 @@ public class ClientView {
                 String choise = CheckInput.readString(" Voulez-vous ajouter un projet à ce client (o/n) ?");
 
                 while (choise.equalsIgnoreCase("o")) {
-                     projectView.saveProject(client.get());
+                    projectView.saveProject(client.get());
 
                     System.out.println(" Projet ajoute avec succes !");
                      choise = CheckInput.readString(" Voulez-vous ajouter un autre projet à ce client (o/n) ?");

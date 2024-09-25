@@ -30,8 +30,11 @@ public class ProjectView {
         String nom = CheckInput.readString(" Entrez le nom du projet :");
 
         Project project = new Project(nom, 0.0, 0.0, EtatProjet.En_cours);
+
         client.addProjectToList(project);
+
         System.out.println(client.getListProject());
+
         Project savedProject = projectService.saveProject(project, client);
 
         System.out.println(" Projet '" + savedProject.getNomProjet() + "' ajouté avec succès !");
